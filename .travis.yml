@@ -5,8 +5,7 @@
 sudo: required
 language: generic
 
-install: cd .. && git clone git@github.com:cfengine/buildscripts.git
-script: buildscripts/build-scripts/travis
+script: ./build-scripts/travis
 
 jobs:
   include:
