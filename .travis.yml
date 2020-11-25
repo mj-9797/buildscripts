@@ -5,8 +5,7 @@
 sudo: required
 language: generic
 
-install: cd .. && git clone git@github.com:cfengine/buildscripts.git
-script: buildscripts/build-scripts/travis
+script: ./build-scripts/travis
 
 jobs:
   include:
@@ -24,5 +23,21 @@ jobs:
       if: not type = cron
 
     - stage: test
+      env: JOB=deployment-test
+      if: not type = cron
+    - arch: arm64
+      stage: build
+      env: JOB=build
+      language: c
+      cache:
+        directories:
+          - $HOME/.cache/
+    - arch: arm64
+      stage: test
+      env: JOB=acceptance-test
+      if: not type = cron
+
+    - arch: arm64
+      stage: test
       env: JOB=deployment-test
       if: not type = cron
